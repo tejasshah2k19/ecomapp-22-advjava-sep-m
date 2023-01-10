@@ -9,22 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.bean.CartBean;
-import com.dao.CartDao;
+import com.bean.OrderBean;
+import com.dao.OrderDao;
 
-public class MyCartServlet extends HttpServlet {
+public class OrderServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+	
 		HttpSession session = request.getSession();
-		int userId = (Integer) session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");// 22
 
-		CartDao cartDao = new CartDao();
-		ArrayList<CartBean> myCart = cartDao.getMyCart(userId);
-		System.out.println(myCart.size());
-
-		request.setAttribute("myCart", myCart);
-		request.getRequestDispatcher("MyCart.jsp").forward(request, response);
+		OrderDao orderDao = new OrderDao();
+		ArrayList<OrderBean> orders =  orderDao.getOrderByUserId(userId);
+	
+		request.setAttribute("orders", orders);
+		
+		request.getRequestDispatcher("MyOrders.jsp").forward(request, response);
 	}
 
 }

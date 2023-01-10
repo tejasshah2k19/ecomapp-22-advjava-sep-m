@@ -15,7 +15,7 @@ public class RemoveCartServlet extends HttpServlet {
 		Integer cartId = Integer.parseInt(request.getParameter("cartId"));
 		
 		CartDao cartDao = new CartDao();
-		cartDao.removeCart(cartId);
+		cartDao.removeCartByCartId(cartId);
 		
 		response.sendRedirect("MyCartServlet");
 		

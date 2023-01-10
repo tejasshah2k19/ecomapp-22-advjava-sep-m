@@ -1,3 +1,4 @@
+<%@page import="com.bean.OrderBean"%>
 <%@page import="com.dao.ProductDao"%>
 <%@page import="com.bean.CartBean"%>
 <%@page import="com.bean.ProductBean"%>
@@ -9,7 +10,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>My Cart</title>
+<title>My Orders</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -19,7 +20,7 @@
 <body>
 
 	<%
-		ArrayList<CartBean> carts = (ArrayList<CartBean>) request.getAttribute("myCart");
+		ArrayList<OrderBean> orders = (ArrayList<OrderBean>) request.getAttribute("orders");
 	%>
 
 	<jsp:include page="Header.jsp"></jsp:include>
@@ -28,33 +29,35 @@
 
 	<div class="container-fluid">
 		<br>
-
 		<div class="Row">
-			<div class="col-md-4">
+			<div class="col-md-6">
+				<table class="table table-bordered table-hover">
+					<tr>
+						<th>OrderId</th>
+						<th>Amount</th>
+						<th>OrderDate</th>
+						<th>OrderStatus</th>
+					</tr>
+
+					<%
+						for (OrderBean order : orders) {
+					%>
+					<tr>
+						<td><%=order.getOrderId()%></td>
+						<td><%=order.getOrderAmount()%></td>
+						<td><%=order.getOrderDate()%></td>
+						<td><%=order.getOrderStatus()%></td>
+
+					</tr>
 
 
-
-				<%
-					for (CartBean p : carts) {
-				%>
-
-				<div class="card">
-					<div class="card-body">
-						<b>ProductdCode : </b><%=p.getProductId()%><br> <b>Name :
-						</b><%=ProductDao.getProductDetailById(p.getProductId()).getName()%><br>
-						<b>Qty : </b><%=p.getQty()%><br> <a
-							href="RemoveCartServlet?cartId=<%=p.getCartId()%>">Remove</a>
-					</div>
-				</div>
-				<br>
-				<%
-					}
-				%>
-
+					<%
+						}
+					%>
+				</table>
 			</div>
 		</div>
-		<br><Br>
-		<a href="CheckOutServlet" class="btn btn-primary">CheckOut</a>
+
 	</div>
 
 
